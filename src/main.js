@@ -14,7 +14,7 @@ router.beforeEach((to, from, next) => {
     // this route requires auth, check if logged in
     // if not, redirect to login page.
     if (true) {
-      cognito_functions.login_user();
+      cognito_functions.login_user('carlinoo', 'carlinoo');
       next({
         path: '/login'
       })
