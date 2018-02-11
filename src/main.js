@@ -19,6 +19,9 @@ Vue.mixin({
     },
     current_user: function () {
       return cognito_functions.current_user();
+    },
+    user_sign_out: function() {
+      return cognito_functions.user_sign_out();
     }
   }
 })

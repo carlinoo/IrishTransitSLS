@@ -74,7 +74,7 @@ export default {
                 console.log(err);
                 return;
             }
-            console.log("session is valid?: " + session.isValid());
+            console.log('session validity: ' + session.isValid());
 
         });
         return true;
@@ -85,7 +85,6 @@ export default {
 
   // To get the current user
   current_user() {
-
     var userPool = new CognitoUserPool(poolData);
     var cognitoUser = userPool.getCurrentUser();
 
@@ -98,7 +97,6 @@ export default {
           alert(err);
           return;
       }
-      console.log('session validity: ' + session.isValid());
 
       cognitoUser.getUserAttributes(function(err, attributes) {
           if (err) {
@@ -107,7 +105,21 @@ export default {
             console.log(attributes);
           }
       });
+    });
+  },
 
-  });
+
+
+  // Sign out a user
+  user_sign_out() {
+    var userPool = new CognitoUserPool(poolData);
+    var cognitoUser = userPool.getCurrentUser();
+
+    if (cognitoUser == null) {
+      return false;
+    }
+
+    cognitoUser.signOut();
+    return true;
   }
 }
