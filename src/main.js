@@ -35,20 +35,22 @@ Vue.mixin({
   }
 })
 
-
+// 
 // router.beforeEach((to, from, next) => {
 //   if (to.matched.some(record => record.meta.authRequired)) {
 //
 //     // Check if the user s signed in,
 //     // if not, go to /login
 //     cognito_functions.user_signed_in(function (is_signed_in) {
-//
+//       console.log("ssddf");
 //       if (!is_signed_in) {
 //         next({
 //           path: '/login'
 //         })
 //       } else {
-//         next()
+//         next({
+//           path: '/'
+//         })
 //       }
 //     });
 //
@@ -56,7 +58,7 @@ Vue.mixin({
 //   } else {
 //     next()
 //   }
-// })
+// });
 
 new Vue({
   el: '#app',

@@ -15,6 +15,7 @@
     <v-text-field
       label="Password"
       v-model="password"
+      type="password"
     ></v-text-field>
         </v-card-text>
         <v-card-actions>
@@ -31,6 +32,16 @@
         username: '',
         password: ''
       }
+    },
+    created() {
+      // If user is signed in => redirect to home
+      this.user_signed_in(function(is_signed_in) {
+        if (is_signed_in) {
+          // this.$router.push('/');
+          window.location  = "/";
+        }
+      });
+
     },
     methods: {
       login: function() {
