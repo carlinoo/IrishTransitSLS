@@ -59,5 +59,55 @@ export default {
         },
 
     });
+  },
+
+
+
+  // To check if a user is checked
+  user_signed_in() {
+    var userPool = new CognitoUserPool(poolData);
+    var cognitoUser = userPool.getCurrentUser();
+
+    if (cognitoUser != null) {
+        cognitoUser.getSession(function(err, session) {
+            if (err) {
+                console.log(err);
+                return;
+            }
+            console.log("session is valid?: " + session.isValid());
+
+        });
+        return true;
+    }
+    return false;
+  },
+
+
+  // To get the current user
+  current_user() {
+
+    var userPool = new CognitoUserPool(poolData);
+    var cognitoUser = userPool.getCurrentUser();
+
+    if (cognitoUser == null) {
+      return null;
+    }
+
+    cognitoUser.getSession(function(err, session) {
+      if (err) {
+          alert(err);
+          return;
+      }
+      console.log('session validity: ' + session.isValid());
+
+      cognitoUser.getUserAttributes(function(err, attributes) {
+          if (err) {
+              console.error(err);
+          } else {
+            console.log(attributes);
+          }
+      });
+
+  });
   }
 }
