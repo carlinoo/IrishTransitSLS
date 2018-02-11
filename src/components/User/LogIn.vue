@@ -39,6 +39,7 @@
         if (this.user_signed_in()) {
           this.$router.push('/');
         }
+        this.$router.push('/');
       }
     }
   }

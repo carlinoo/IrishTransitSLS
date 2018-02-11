@@ -12,7 +12,8 @@ export default new Router({
       name: 'Home',
       component: Home,
       meta: {
-        authRequired: true
+        authRequired: true,
+        registeredVisible: true
       }
     },
     {
@@ -20,7 +21,8 @@ export default new Router({
       name: 'LogIn',
       component: LogIn,
       meta: {
-        authRequired: false
+        authRequired: false,
+        registeredVisible: false
       }
     }
   ]

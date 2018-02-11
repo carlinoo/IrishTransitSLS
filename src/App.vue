@@ -13,7 +13,7 @@
         <v-btn  href="/" icon v-if="!this.user_signed_in()">
           <v-icon>edit</v-icon>
         </v-btn>
-        <v-btn icon v-if="this.user_signed_in()">
+        <v-btn icon v-on:click="sign_out()" v-if="this.user_signed_in()">
           <v-icon href="/">exit_to_app</v-icon>
         </v-btn>
       </div>
@@ -38,6 +38,13 @@ import Header from './components/Layout/Header';
     data () {
       return {
 
+      }
+    },
+    methods: {
+      sign_out: function() {
+        console.log("sdf");
+        this.user_sign_out();
+        this.$router.push('/login');
       }
     },
     components: {

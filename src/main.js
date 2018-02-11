@@ -40,6 +40,7 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.authRequired)) {
     // this route requires auth, check if logged in
     // if not, redirect to login page.
+
     if (!cognito_functions.user_signed_in()) {
       next({
         path: '/login'
