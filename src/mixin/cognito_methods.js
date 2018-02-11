@@ -121,5 +121,77 @@ export default {
 
     cognitoUser.signOut();
     return true;
+  },
+
+
+
+  // Register a user
+  register_user(email, username, password) {
+
+    var userPool = new CognitoUserPool(poolData);
+
+    var attributeList = [];
+
+    var dataEmail = {
+        Name : 'email',
+        Value : email
+    };
+
+    var attributeEmail = new CognitoUserAttribute(dataEmail);
+
+    attributeList.push(attributeEmail);
+
+    userPool.signUp(username, password, attributeList, null, function(err, result){
+        if (err) {
+            console.log(err);
+            return false;
+        }
+        cognitoUser = result.user;
+        console.log('user name is ' + cognitoUser.getUsername());
+        return  true;
+    });
+  },
+
+
+
+  // To confirm email code
+  confirm_user(username, code) {
+    var userPool = new CognitoUserPool(poolData);
+    var userData = {
+        Username : username,
+        Pool : userPool
+    };
+
+    var cognitoUser = new CognitoUser(userData);
+
+    cognitoUser.confirmRegistration(code, true, function(err, result) {
+        if (err) {
+            console.log(err);
+            return false;
+        }
+        console.log('call result: ' + result);
+        return true;
+    });
+  },
+
+
+
+  resend_code_user(username) {
+    var userPool = new CognitoUserPool(poolData);
+    var userData = {
+        Username : username,
+        Pool : userPool
+    };
+
+    var cognitoUser = new CognitoUser(userData);
+
+    cognitoUser.resendConfirmationCode(function(err, result) {
+        if (err) {
+            console.log(err);
+            return false;
+        }
+        console.log('call result: ' + result);
+        return true;
+    });
   }
 }

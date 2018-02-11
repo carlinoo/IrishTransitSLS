@@ -10,7 +10,7 @@
       }
     },
     created() {
-      console.log(this.current_user());
+      // console.log(this.confirm_user('as', '613666'));
     }
   }
 </script>

@@ -14,14 +14,23 @@ Vue.mixin({
     login_user: function (username, password) {
       return cognito_functions.login_user(username, password);
     },
-    user_signed_in: function () {
+    user_signed_in: function() {
       return cognito_functions.user_signed_in();
     },
-    current_user: function () {
+    current_user: function() {
       return cognito_functions.current_user();
     },
     user_sign_out: function() {
       return cognito_functions.user_sign_out();
+    },
+    register_user: function(email, username, password) {
+      return cognito_functions.register_user(email, username, password);
+    },
+    confirm_user: function(username, password) {
+      return cognito_functions.confirm_user(username, password);
+    },
+    resend_code_user: function(username) {
+      return cognito_functions.resend_code_user(username);
     }
   }
 })
