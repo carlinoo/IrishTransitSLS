@@ -13,7 +13,7 @@ import AWS from 'aws-sdk';
 export default {
 
   // Log in a user given the username and password
-  login_user(username, password) {
+  login_user(username, password, callback = null) {
     var authenticationData = {
         Username : username,
         Password : password,
@@ -49,13 +49,13 @@ export default {
                      // Instantiate aws sdk service objects now that the credentials have been updated.
                      // example: var s3 = new AWS.S3();
                      console.log('Successfully logged!');
-                     return true;
+                     callback != null && callback();
                 }
             });
         },
 
         onFailure: function(err) {
-            alert(err);
+            console.error(err);
         },
 
     });
@@ -64,27 +64,29 @@ export default {
 
 
   // To check if a user is checked
-  user_signed_in() {
+  user_signed_in(callback) {
     var userPool = new CognitoUserPool(poolData);
     var cognitoUser = userPool.getCurrentUser();
 
+
+    // Check if the user is set
     if (cognitoUser != null) {
         cognitoUser.getSession(function(err, session) {
             if (err) {
-                console.log(err);
-                return;
+                console.error(err);
             }
-            console.log('session validity: ' + session.isValid());
-
+            callback(session.isValid());
+            return;
         });
-        return true;
+    } else {
+      // If the user is null, return false
+      callback != null && callback(false);
     }
-    return false;
   },
 
 
   // To get the current user
-  current_user() {
+  current_user(callback = null) {
     var userPool = new CognitoUserPool(poolData);
     var cognitoUser = userPool.getCurrentUser();
 
@@ -94,7 +96,7 @@ export default {
 
     cognitoUser.getSession(function(err, session) {
       if (err) {
-          alert(err);
+          console.error(err);
           return;
       }
 
@@ -103,6 +105,7 @@ export default {
               console.error(err);
           } else {
             console.log(attributes);
+            callback != null && callback(attributes);
           }
       });
     });
@@ -126,7 +129,7 @@ export default {
 
 
   // Register a user
-  register_user(email, username, password) {
+  register_user(email, username, password, callback = null) {
 
     var userPool = new CognitoUserPool(poolData);
 
@@ -144,18 +147,20 @@ export default {
     userPool.signUp(username, password, attributeList, null, function(err, result){
         if (err) {
             console.log(err);
-            return false;
+            callback != null && callback(false);
+            return;
         }
         cognitoUser = result.user;
         console.log('user name is ' + cognitoUser.getUsername());
-        return  true;
+        callback != null && callback(cognitoUser);
+
     });
   },
 
 
 
   // To confirm email code
-  confirm_user(username, code) {
+  confirm_user(username, code, callback = null) {
     var userPool = new CognitoUserPool(poolData);
     var userData = {
         Username : username,
@@ -167,16 +172,18 @@ export default {
     cognitoUser.confirmRegistration(code, true, function(err, result) {
         if (err) {
             console.log(err);
-            return false;
+            callback != null && callback(false);
+
         }
         console.log('call result: ' + result);
-        return true;
+        callback != null && callback(true);
+
     });
   },
 
 
 
-  resend_code_user(username) {
+  resend_code_user(username, callback = null) {
     var userPool = new CognitoUserPool(poolData);
     var userData = {
         Username : username,
@@ -188,10 +195,11 @@ export default {
     cognitoUser.resendConfirmationCode(function(err, result) {
         if (err) {
             console.log(err);
-            return false;
+            callback != null && callback();
+
         }
         console.log('call result: ' + result);
-        return true;
+        callback != null && callback(true);
     });
   }
 }

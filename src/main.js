@@ -14,8 +14,8 @@ Vue.mixin({
     login_user: function (username, password) {
       return cognito_functions.login_user(username, password);
     },
-    user_signed_in: function() {
-      return cognito_functions.user_signed_in();
+    user_signed_in: function(callback) {
+      return cognito_functions.user_signed_in(callback);
     },
     current_user: function() {
       return cognito_functions.current_user();
@@ -36,22 +36,27 @@ Vue.mixin({
 })
 
 
-router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.authRequired)) {
-    // this route requires auth, check if logged in
-    // if not, redirect to login page.
-
-    if (!cognito_functions.user_signed_in()) {
-      next({
-        path: '/login'
-      })
-    } else {
-      next()
-    }
-  } else {
-    next()
-  }
-})
+// router.beforeEach((to, from, next) => {
+//   if (to.matched.some(record => record.meta.authRequired)) {
+//
+//     // Check if the user s signed in,
+//     // if not, go to /login
+//     cognito_functions.user_signed_in(function (is_signed_in) {
+//
+//       if (!is_signed_in) {
+//         next({
+//           path: '/login'
+//         })
+//       } else {
+//         next()
+//       }
+//     });
+//
+//
+//   } else {
+//     next()
+//   }
+// })
 
 new Vue({
   el: '#app',
