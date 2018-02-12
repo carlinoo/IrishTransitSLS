@@ -80,11 +80,12 @@ export default {
                 console.error(err);
             }
             callback(session.isValid());
-            return;
+            return session.isValid();;
         });
     } else {
       // If the user is null, return false
       callback != null && callback(false);
+      return false;
     }
   },
 

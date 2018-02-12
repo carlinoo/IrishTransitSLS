@@ -42,7 +42,6 @@ import Header from './components/Layout/Header';
     },
     methods: {
       sign_out: function() {
-        console.log("sdf");
         this.user_sign_out();
         this.$router.push('/login');
       },

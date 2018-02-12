@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '../components/Home'
 import LogIn from '../components/User/LogIn'
+import SignUp from '../components/User/SignUp'
 
 Vue.use(Router)
 
@@ -20,6 +21,15 @@ export default new Router({
       path: '/login',
       name: 'LogIn',
       component: LogIn,
+      meta: {
+        authRequired: false,
+        registeredVisible: false
+      }
+    },
+    {
+      path: '/signup',
+      name: 'SignUp',
+      component: SignUp,
       meta: {
         authRequired: false,
         registeredVisible: false
