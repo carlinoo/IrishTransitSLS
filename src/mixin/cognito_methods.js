@@ -45,17 +45,21 @@ export default {
             AWS.config.credentials.refresh((error) => {
                 if (error) {
                      console.error(error);
+                     callback != null && callback(false);
+                     return false;
                 } else {
                      // Instantiate aws sdk service objects now that the credentials have been updated.
                      // example: var s3 = new AWS.S3();
                      console.log('Successfully logged!');
-                     callback != null && callback();
+                     callback != null && callback(true);
+                     return true;
                 }
             });
         },
 
         onFailure: function(err) {
             console.error(err);
+            callback != null && callback(false);
         },
 
     });
@@ -97,6 +101,7 @@ export default {
     cognitoUser.getSession(function(err, session) {
       if (err) {
           console.error(err);
+          callback != null && callback(false);
           return;
       }
 
@@ -148,12 +153,12 @@ export default {
         if (err) {
             console.log(err);
             callback != null && callback(false);
-            return;
+            return false
         }
         cognitoUser = result.user;
         console.log('user name is ' + cognitoUser.getUsername());
         callback != null && callback(cognitoUser);
-
+        return true;
     });
   },
 
@@ -195,7 +200,7 @@ export default {
     cognitoUser.resendConfirmationCode(function(err, result) {
         if (err) {
             console.log(err);
-            callback != null && callback();
+            callback != null && callback(false);
 
         }
         console.log('call result: ' + result);
