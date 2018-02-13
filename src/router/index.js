@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Home from '../components/Home'
 import LogIn from '../components/User/LogIn'
 import SignUp from '../components/User/SignUp'
+import ConfirmUser from '../components/User/Confirm'
 
 Vue.use(Router)
 
@@ -30,6 +31,15 @@ export default new Router({
       path: '/signup',
       name: 'SignUp',
       component: SignUp,
+      meta: {
+        authRequired: false,
+        registeredVisible: false
+      }
+    },
+    {
+      path: '/confirm',
+      name: 'ConfirmUser',
+      component: ConfirmUser,
       meta: {
         authRequired: false,
         registeredVisible: false
