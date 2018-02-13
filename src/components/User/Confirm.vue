@@ -21,6 +21,7 @@
         </v-card-text>
         <v-card-actions>
           <v-btn v-on:click="confirm_code" flat color="blue darken-3">Confirm</v-btn>
+          <v-btn v-on:click="resend_code" flat color="blue darken-3">Resend Code</v-btn>
         </v-card-actions>
       </v-card>
     </v-flex>
@@ -36,7 +37,7 @@
     },
     methods: {
       confirm_code: function() {
-        
+
       }
     }
 
