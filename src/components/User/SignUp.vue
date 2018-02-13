@@ -42,7 +42,15 @@ export default {
   },
   methods: {
     signup: function() {
-      
+
+      this.register_user(this.email, this.username, this.password, function(result) {
+        if (result === false) {
+          console.log("Error Signing Up");
+          return;
+        }
+
+        console.log(result);
+      });
     }
   }
 }

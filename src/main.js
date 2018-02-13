@@ -23,8 +23,8 @@ Vue.mixin({
     user_sign_out: function() {
       return cognito_functions.user_sign_out();
     },
-    register_user: function(email, username, password) {
-      return cognito_functions.register_user(email, username, password);
+    register_user: function(email, username, password, callback) {
+      return cognito_functions.register_user(email, username, password, callback);
     },
     confirm_user: function(username, password) {
       return cognito_functions.confirm_user(username, password);
@@ -35,7 +35,7 @@ Vue.mixin({
   }
 })
 
-// 
+//
 // router.beforeEach((to, from, next) => {
 //   if (to.matched.some(record => record.meta.authRequired)) {
 //
