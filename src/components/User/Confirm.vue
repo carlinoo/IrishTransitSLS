@@ -9,9 +9,9 @@
         </v-card-title>
         <v-card-text>
           <v-text-field
-      label="Email Address"
-      v-model="email"
-      type="email"
+      label="Username"
+      v-model="username"
+      type="text"
     ></v-text-field>
     <v-text-field
       label="Code"
@@ -31,12 +31,23 @@
   export default {
     data() {
       return {
-        email = '',
-        code = ''
+        username: '',
+        code: ''
       }
     },
     methods: {
       confirm_code: function() {
+        this.confirm_user(this.username, this.code, function (is_activated) {
+          if (is_activated) {
+            console.log("Activated!!");
+            // this.$router.push("/");
+          } else {
+            console.log("Error");
+          }
+        });
+      },
+
+      resend_code: function() {
 
       }
     }

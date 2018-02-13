@@ -26,8 +26,8 @@ Vue.mixin({
     register_user: function(email, username, password, callback) {
       return cognito_functions.register_user(email, username, password, callback);
     },
-    confirm_user: function(username, password) {
-      return cognito_functions.confirm_user(username, password);
+    confirm_user: function(username, password, callback) {
+      return cognito_functions.confirm_user(username, password, callback);
     },
     resend_code_user: function(username) {
       return cognito_functions.resend_code_user(username);
