@@ -42,7 +42,7 @@ export default {
   },
   methods: {
     signup: function() {
-      console.log(this.email, this.password, this.password);
+      
     }
   }
 }

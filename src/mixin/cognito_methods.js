@@ -150,7 +150,7 @@ export default {
 
     attributeList.push(attributeEmail);
 
-    userPool.signUp(username, password, attributeList, null, function(err, result){
+    userPool.signUp(username, password, attributeList, null, function(err, result) {
         if (err) {
             console.log(err);
             callback != null && callback(false);
