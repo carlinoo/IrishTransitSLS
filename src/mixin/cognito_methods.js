@@ -69,23 +69,34 @@ export default {
 
   // To check if a user is checked
   user_signed_in(callback) {
+    // var userPool = new CognitoUserPool(poolData);
+    // var cognitoUser = userPool.getCurrentUser();
+    //
+    //
+    // // Check if the user is set
+    // if (cognitoUser != null) {
+    //     cognitoUser.getSession(function(err, session) {
+    //         if (err) {
+    //             console.error(err);
+    //         }
+    //         callback(session.isValid());
+    //         return session.isValid();;
+    //     });
+    // } else {
+    //   // If the user is null, return false
+    //   callback != null && callback(false);
+    //   return false;
+    // }
+  },
+
+  cognitoUserToken() {
     var userPool = new CognitoUserPool(poolData);
     var cognitoUser = userPool.getCurrentUser();
 
-
-    // Check if the user is set
-    if (cognitoUser != null) {
-        cognitoUser.getSession(function(err, session) {
-            if (err) {
-                console.error(err);
-            }
-            callback(session.isValid());
-            return session.isValid();;
-        });
+    if (cognitoUser == null) {
+      return null;
     } else {
-      // If the user is null, return false
-      callback != null && callback(false);
-      return false;
+      return cognitoUser;
     }
   },
 

@@ -44,9 +44,11 @@ router.beforeEach((to, from, next) => {
 
     // Check if the user s signed in,
     // if not, go to /login
-    cognito_functions.user_signed_in(function (is_signed_in) {
+    cognito_functions.is_signed_in(function (is_signed_in, cognitoUser) {
       if (!is_signed_in) {
-        next()
+        next({
+          path:'/login'
+        })
       } else {
         next()
       }
