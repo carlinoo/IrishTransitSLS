@@ -34,14 +34,7 @@
       }
     },
     created() {
-      // If user is signed in => redirect to home
-      this.user_signed_in(function(is_signed_in) {
-        if (is_signed_in) {
-          // this.$router.push('/');
-          window.location  = "/";
-        }
-      });
-
+    
     },
     methods: {
       login: function() {
