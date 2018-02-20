@@ -31,6 +31,9 @@ Vue.mixin({
     },
     resend_code_user: function(username) {
       return cognito_functions.resend_code_user(username);
+    },
+    is_signed_in: function(callback) {
+      return cognito_functions.is_signed_in(callback);
     }
   }
 })
@@ -43,9 +46,7 @@ router.beforeEach((to, from, next) => {
     // if not, go to /login
     cognito_functions.user_signed_in(function (is_signed_in) {
       if (!is_signed_in) {
-        next({
-          path: '/login'
-        })
+        next()
       } else {
         next()
       }

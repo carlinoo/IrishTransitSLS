@@ -90,6 +90,18 @@ export default {
   },
 
 
+  is_signed_in(callback) {
+    var userPool = new CognitoUserPool(poolData);
+    var cognitoUser = userPool.getCurrentUser();
+
+    if (cognitoUser == null) {
+      callback(false, null);
+    } else {
+      callback(true, cognitoUser);
+    }
+  },
+
+
   // To get the current user
   current_user(callback = null) {
     var userPool = new CognitoUserPool(poolData);
