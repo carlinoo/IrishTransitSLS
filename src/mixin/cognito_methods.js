@@ -96,6 +96,7 @@ export default {
     if (cognitoUser == null) {
       return null;
     } else {
+      debugger;
       return cognitoUser;
     }
   },

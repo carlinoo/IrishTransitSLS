@@ -3,10 +3,11 @@ import App from './App.vue'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.css'
 import router from './router'
+import VueResource from 'vue-resource'
 import cognito_functions from './mixin/cognito_methods'
 
-Vue.use(Vuetify)
-
+Vue.use(Vuetify);
+Vue.use(VueResource);
 
 // Mixing for cognito
 Vue.mixin({
@@ -34,6 +35,9 @@ Vue.mixin({
     },
     is_signed_in: function(callback) {
       return cognito_functions.is_signed_in(callback);
+    },
+    cognitoUserToken: function() {
+      return cognito_functions.cognitoUserToken();
     }
   }
 })
