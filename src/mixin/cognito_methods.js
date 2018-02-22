@@ -89,16 +89,25 @@ export default {
     // }
   },
 
-  cognitoUserToken() {
+  cognitoUserToken(callback) {
     var userPool = new CognitoUserPool(poolData);
     var cognitoUser = userPool.getCurrentUser();
 
     if (cognitoUser == null) {
+      callback(null);
       return null;
-    } else {
-      debugger;
-      return cognitoUser;
     }
+
+    cognitoUser.getSession(function(err, session) {
+       if (err) {
+          console.log(err);
+          callback(null);
+           return null;
+       }
+
+       callback(session.getIdToken().getJwtToken());
+     });
+
   },
 
 

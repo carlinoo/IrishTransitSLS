@@ -36,8 +36,8 @@ Vue.mixin({
     is_signed_in: function(callback) {
       return cognito_functions.is_signed_in(callback);
     },
-    cognitoUserToken: function() {
-      return cognito_functions.cognitoUserToken();
+    cognitoUserToken: function(callback) {
+      return cognito_functions.cognitoUserToken(callback);
     }
   }
 })
