@@ -55,9 +55,20 @@ router.beforeEach((to, from, next) => {
     });
 
   } else {
-    next()
+    // Users cannot see sessions paths when they are signed in
+    cognito_functions.is_signed_in(function (is_signed_in, cognitoUser) {
+      if (is_signed_in) {
+        next({
+          path:'/'
+        })
+      } else {
+        next()
+      }
+    });
   }
 });
+
+
 
 new Vue({
   el: '#app',
