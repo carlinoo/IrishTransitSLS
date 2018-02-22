@@ -9,6 +9,10 @@ import cognito_functions from './mixin/cognito_methods'
 Vue.use(Vuetify);
 Vue.use(VueResource);
 
+cognito_functions.cognitoUserToken(function(token) {
+  Vue.http.headers.common['Authorization'] = token;
+});
+
 // Mixing for cognito
 Vue.mixin({
   methods: {

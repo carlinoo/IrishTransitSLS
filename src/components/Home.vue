@@ -15,9 +15,9 @@
       // .then(response => {
       //   console.log(response);
       // });
-      this.cognitoUserToken(function(data) {
-        console.log(data);
-      });
+      // this.cognitoUserToken(function(data) {
+      //   console.log(data);
+      // });
     }
   }
 </script>
