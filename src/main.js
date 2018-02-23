@@ -39,6 +39,10 @@ Vue.mixin({
     },
     cognitoUserToken: function(callback) {
       return cognito_functions.cognitoUserToken(callback);
+    },
+    router: function() {
+      debugger;
+      return router;
     }
   }
 })

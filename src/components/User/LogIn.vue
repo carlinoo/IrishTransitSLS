@@ -30,7 +30,8 @@
     data () {
       return {
         username: '',
-        password: ''
+        password: '',
+
       }
     },
     created() {
@@ -38,7 +39,9 @@
     },
     methods: {
       login: function() {
-        this.login_user(this.username, this.password, function (is_signed) {
+        let vm = this;
+
+        this.login_user(this.username, this.password, is_signed => {
           if (is_signed) {
             this.$router.push('/');
             console.log("Logged in");
