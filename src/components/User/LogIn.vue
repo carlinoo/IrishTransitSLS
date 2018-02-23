@@ -34,16 +34,18 @@
       }
     },
     created() {
-    
+
     },
     methods: {
       login: function() {
-        this.login_user(this.username, this.password);
-
-        if (this.user_signed_in()) {
-          this.$router.push('/');
-        }
-        this.$router.push('/');
+        this.login_user(this.username, this.password, function (is_signed) {
+          if (is_signed) {
+            this.$router.push('/');
+            console.log("Logged in");
+          } else {
+            console.log("Error loging in");
+          }
+        });
       }
     }
   }

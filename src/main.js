@@ -16,8 +16,8 @@ cognito_functions.cognitoUserToken(function(token) {
 // Mixing for cognito
 Vue.mixin({
   methods: {
-    login_user: function (username, password) {
-      return cognito_functions.login_user(username, password);
+    login_user: function (username, password, callback) {
+      return cognito_functions.login_user(username, password, callback);
     },
     user_signed_in: function(callback) {
       return cognito_functions.user_signed_in(callback);
@@ -37,9 +37,6 @@ Vue.mixin({
     resend_code_user: function(username) {
       return cognito_functions.resend_code_user(username);
     },
-    is_signed_in: function(callback) {
-      return cognito_functions.is_signed_in(callback);
-    },
     cognitoUserToken: function(callback) {
       return cognito_functions.cognitoUserToken(callback);
     }
@@ -52,8 +49,8 @@ router.beforeEach((to, from, next) => {
 
     // Check if the user s signed in,
     // if not, go to /login
-    cognito_functions.is_signed_in(function (is_signed_in, cognitoUser) {
-      if (!is_signed_in) {
+    cognito_functions.user_signed_in(function (user_signed_in, cognitoUser) {
+      if (!user_signed_in) {
         next({
           path:'/login'
         })
@@ -64,8 +61,8 @@ router.beforeEach((to, from, next) => {
 
   } else {
     // Users cannot see sessions paths when they are signed in
-    cognito_functions.is_signed_in(function (is_signed_in, cognitoUser) {
-      if (is_signed_in) {
+    cognito_functions.user_signed_in(function (user_signed_in, cognitoUser) {
+      if (user_signed_in) {
         next({
           path:'/'
         })

@@ -13,7 +13,7 @@ import AWS from 'aws-sdk';
 export default {
 
   // Log in a user given the username and password
-  login_user(username, password, callback = null) {
+  login_user(username, password, callback) {
     var authenticationData = {
         Username : username,
         Password : password,
@@ -68,7 +68,7 @@ export default {
 
 
   // To check if a user is checked
-  user_signed_in(callback) {
+  // user_signed_in(callback) {
     // var userPool = new CognitoUserPool(poolData);
     // var cognitoUser = userPool.getCurrentUser();
     //
@@ -87,7 +87,7 @@ export default {
     //   callback != null && callback(false);
     //   return false;
     // }
-  },
+  // },
 
   cognitoUserToken(callback) {
     var userPool = new CognitoUserPool(poolData);
@@ -111,7 +111,7 @@ export default {
   },
 
 
-  is_signed_in(callback) {
+  user_signed_in(callback) {
     var userPool = new CognitoUserPool(poolData);
     var cognitoUser = userPool.getCurrentUser();
 
