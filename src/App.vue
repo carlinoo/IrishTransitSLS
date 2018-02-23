@@ -10,10 +10,10 @@
       </v-toolbar-title>
 
       <div class="d-flex align-center" style="margin-left: auto">
-        <v-btn  href="/" icon >
+        <v-btn v-if="true" href="/" icon >
           <v-icon>edit</v-icon>
         </v-btn>
-        <v-btn icon v-on:click="sign_out()">
+        <v-btn v-if="logged_in" icon v-on:click="sign_out()">
           <v-icon href="/">exit_to_app</v-icon>
         </v-btn>
       </div>
@@ -22,6 +22,7 @@
     <v-content>
       <v-container fluid>
         <router-view></router-view>
+
       </v-container>
     </v-content>
     <v-footer app></v-footer>
@@ -48,6 +49,13 @@ import Header from './components/Layout/Header';
 
       go_home() {
         this.$router.push('/');
+      }
+    },
+    asyncComputed: {
+      logged_in: function() {
+        return new Promise((resolve, reject) => {
+          this.user_signed_in((bool) => resolve(bool));
+        });
       }
     },
     components: {

@@ -4,10 +4,13 @@ import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.css'
 import router from './router'
 import VueResource from 'vue-resource'
+import AsyncComputed from 'vue-async-computed'
 import cognito_functions from './mixin/cognito_methods'
 
 Vue.use(Vuetify);
 Vue.use(VueResource);
+Vue.use(AsyncComputed);
+
 
 cognito_functions.cognitoUserToken(function(token) {
   Vue.http.headers.common['Authorization'] = token;
@@ -39,10 +42,6 @@ Vue.mixin({
     },
     cognitoUserToken: function(callback) {
       return cognito_functions.cognitoUserToken(callback);
-    },
-    router: function() {
-      debugger;
-      return router;
     }
   }
 })
