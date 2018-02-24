@@ -1,4 +1,5 @@
 <template>
+  <div>
   <v-flex xs12 sm6 offset-sm3 back>
     <br><br>
       <v-card>
@@ -10,16 +11,47 @@
         </v-card-title>
 
         <v-card-text>
-          <v-text-field
-      label="Username"
-      v-model="username"
-      type="text"
-    ></v-text-field>
-    <v-text-field
-      label="Code"
-      v-model="code"
-      type="text"
-    ></v-text-field>
+          <v-stepper v-model="element">
+            <v-stepper-header>
+              <v-stepper-step step="1" :complete="element > 1">Enter Username</v-stepper-step>
+              <v-divider></v-divider>
+              <v-stepper-step step="2" :complete="element > 2">Verification</v-stepper-step>
+              <v-divider></v-divider>
+              <v-stepper-step step="3">Completed</v-stepper-step>
+            </v-stepper-header>
+            <v-stepper-items>
+              <v-stepper-content step="1">
+
+                <br>
+                <v-text-field
+                  label="Username"
+                  v-model="username"
+                ></v-text-field>
+                <br>
+
+                <v-btn color="primary" @click="forgotPassword">Continue</v-btn>
+              </v-stepper-content>
+
+              <v-stepper-content step="2">
+                <br>
+                <v-text-field
+                  label="Verification Code"
+                  v-model="verificationCode"
+                ></v-text-field>
+                <v-text-field
+                  label="New Password"
+                  v-model="newPassword"
+                ></v-text-field>
+                <br>
+                <v-btn color="primary" @click="VerifyCode">Continue</v-btn>
+              </v-stepper-content>
+
+              <v-stepper-content step="3">
+                <v-card color="grey lighten-1" class="mb-5" height="200px"></v-card>
+                <v-btn color="primary" @click="">Continue</v-btn>
+              </v-stepper-content>
+            </v-stepper-items>
+          </v-stepper>
         </v-card-text>
 
         <v-card-actions>
@@ -28,6 +60,7 @@
         </v-card-actions>
       </v-card>
     </v-flex>
+  </div>
 </template>
 
 
@@ -38,7 +71,31 @@ export default {
   data() {
     return {
       username: '',
-      code: ''
+      verificationCode: '',
+      newPassword: '',
+      element: 1
+    }
+  },
+  methods: {
+    forgotPassword() {
+      this.userForgotPassword(this.username, (success, data) => {
+        if (success) {
+          this.element = 2;
+        } else {
+          console.log(data);
+        }
+      });
+    },
+
+    VerifyCode() {
+      this.confirmResetPassword(this.username, this.verificationCode, this.newPassword, (success, data) => {
+        if (success) {
+          this.element = 3;
+        } else {
+          console.log(data);
+          // Display errors
+        }
+      });
     }
   }
 }
@@ -47,5 +104,9 @@ export default {
 
 
 
-<style lang="css">
+<style media="screen" >
+  .content {
+    background-color: #C9D3D8;
+  }
+
 </style>

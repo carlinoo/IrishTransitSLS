@@ -34,7 +34,7 @@
         <v-card-actions>
           <v-btn v-on:click="login" flat color="blue darken-3">Log In</v-btn>
           <v-btn v-on:click="$router.push('/signup')" flat color="grey" class="right">Register</v-btn>
-          <v-btn v-on:click="forgotpassword" flat color="grey" class="right">Forgot Password?</v-btn>
+          <v-btn v-on:click="$router.push('/forgotpassword')" flat color="grey" class="right">Forgot Password?</v-btn>
         </v-card-actions>
       </v-card>
 
@@ -99,10 +99,6 @@
           this.loader.show = false;
         });
 
-      },
-
-      forgotpassword() {
-        this.userForgotPassword('adgfs');
       }
     }
   }

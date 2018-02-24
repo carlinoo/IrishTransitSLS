@@ -93,12 +93,15 @@ export default {
         Pool : userPool
     };
 
+    var cognitoUser = new CognitoUser(userData);
+
+
     cognitoUser.confirmPassword(verificationCode, newPassword, {
         onSuccess() {
-            callback(true);
+            callback(true, null);
         },
         onFailure(err) {
-            callback(false);
+            callback(false, err);
         }
     });
   },
