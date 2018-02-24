@@ -1,6 +1,18 @@
 <template>
   <v-flex xs12 sm6 offset-sm3 back>
-    <br><br>
+
+    <br>
+
+    <v-progress-linear v-if="loader.show" :indeterminate="true"></v-progress-linear>
+
+
+    <!-- Alert -->
+    <v-alert :type="alert.type" dismissible v-model="alert.show">
+      {{ alert.text }}
+    </v-alert>
+
+
+    <br>
       <v-card>
         <v-card-title primary-title>
           <div>
@@ -24,8 +36,18 @@
           <v-btn v-on:click="goRegister" flat color="grey" class="right">Register</v-btn>
         </v-card-actions>
       </v-card>
+      <v-snackbar
+      :timeout="2000"
+      :top="true"
+      :right="true"
+      :multi-line="true"
+      :vertical="true"
+      v-model="snackbar.show"
+    > {{ snackbar.text }} <v-btn flat color="pink" @click.native="snackbar.show = false">Close</v-btn></v-snackbar>
     </v-flex>
 </template>
+
+
 
 <script>
   export default {
@@ -33,7 +55,18 @@
       return {
         username: '',
         password: '',
-
+        snackbar: {
+          text: '',
+          show: false
+        },
+        alert: {
+          text: "",
+          show: false,
+          type: "success"
+        },
+        loader: {
+          show: false
+        }
       }
     },
     created() {
@@ -41,16 +74,28 @@
     },
     methods: {
       login: function() {
-        let vm = this;
+
+        this.loader.show = true;
+        this.alert.show = false;
 
         this.login_user(this.username, this.password, is_signed => {
           if (is_signed) {
+            this.snackbar.text = "Successfully logged in";
+            this.snackbar.show = true;
+            this.alert.text = "Successfully logged in";
+            this.alert.type = "success";
+            this.alert.show = true;
             this.$router.push('/');
-            console.log("Logged in");
           } else {
-            console.log("Error loging in");
+            // Show alert
+            this.alert.text = "Incorrect username or password";
+            this.alert.type = "error";
+            this.alert.show = true;
           }
+
+          this.loader.show = false;
         });
+
       },
 
       goRegister() {
