@@ -37,6 +37,7 @@
         </v-card-text>
         <v-card-actions>
           <v-btn v-on:click="signup" flat color="blue darken-3">Sign Up</v-btn>
+          <v-btn v-on:click="$router.push('/login')" flat color="grey">Log In</v-btn>
         </v-card-actions>
       </v-card>
     </v-flex>

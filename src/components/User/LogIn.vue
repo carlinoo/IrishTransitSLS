@@ -33,7 +33,7 @@
         </v-card-text>
         <v-card-actions>
           <v-btn v-on:click="login" flat color="blue darken-3">Log In</v-btn>
-          <v-btn v-on:click="goRegister" flat color="grey" class="right">Register</v-btn>
+          <v-btn v-on:click="$router.push('/signup')" flat color="grey" class="right">Register</v-btn>
         </v-card-actions>
       </v-card>
       <v-snackbar
@@ -96,10 +96,6 @@
           this.loader.show = false;
         });
 
-      },
-
-      goRegister() {
-        this.$router.push('/signup');
       }
     }
   }
