@@ -45,13 +45,13 @@ export default {
             AWS.config.credentials.refresh((error) => {
                 if (error) {
                      console.error(error);
-                     callback != null && callback(false);
+                     callback != null && callback(false, error);
                      return false;
                 } else {
                      // Instantiate aws sdk service objects now that the credentials have been updated.
                      // example: var s3 = new AWS.S3();
                      console.log('Successfully logged!');
-                     callback != null && callback(true);
+                     callback != null && callback(true, null);
                      return true;
                 }
             });
@@ -59,7 +59,7 @@ export default {
 
         onFailure: function(err) {
             console.error(err);
-            callback != null && callback(false);
+            callback != null && callback(false, err);
         },
 
     });
@@ -227,12 +227,12 @@ export default {
     userPool.signUp(username, password, attributeList, null, function(err, result) {
         if (err) {
             console.log(err);
-            callback != null && callback(false);
-            return false
+            callback != null && callback(false, err);
+            return false;
         }
         var cognitoUser = result.user;
         console.log('user name is ' + cognitoUser.getUsername());
-        callback != null && callback(cognitoUser);
+        callback != null && callback(true, cognitoUser);
         return true;
     });
   },

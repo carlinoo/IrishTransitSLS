@@ -81,7 +81,7 @@
         this.loader.show = true;
         this.alert.show = false;
 
-        this.login_user(this.username, this.password, is_signed => {
+        this.login_user(this.username, this.password, (is_signed, error) => {
           if (is_signed) {
             this.snackbar.text = "Successfully logged in";
             this.snackbar.show = true;
@@ -91,7 +91,7 @@
             this.$router.push('/');
           } else {
             // Show alert
-            this.alert.text = "Incorrect username or password";
+            this.alert.text = error.message;
             this.alert.type = "error";
             this.alert.show = true;
           }

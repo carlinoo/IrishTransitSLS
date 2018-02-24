@@ -1,7 +1,14 @@
 <template>
   <div>
   <v-flex xs12 sm6 offset-sm3 back>
-    <br><br>
+    <br>
+
+    <!-- Alert -->
+    <v-alert :type="alert.type" dismissible v-model="alert.show">
+      {{ alert.text }}
+    </v-alert>
+
+    <br>
       <v-card>
 
         <v-card-title primary-title>
@@ -47,18 +54,9 @@
                 <v-btn color="primary" @click="VerifyCode">Continue</v-btn>
               </v-stepper-content>
 
-              <v-stepper-content step="3">
-                <v-card color="grey lighten-1" class="mb-5" height="200px"></v-card>
-                <v-btn color="primary" @click="">Continue</v-btn>
-              </v-stepper-content>
             </v-stepper-items>
           </v-stepper>
         </v-card-text>
-
-        <v-card-actions>
-          <!-- <v-btn v-on:click="confirm_code" flat color="blue darken-3">Go</v-btn>
-          <v-btn v-on:click="resend_code" flat color="blue darken-3">Resend Code</v-btn> -->
-        </v-card-actions>
       </v-card>
     </v-flex>
   </div>
@@ -74,27 +72,38 @@ export default {
       username: '',
       verificationCode: '',
       newPassword: '',
-      element: 1
+      element: 1,
+      alert: {
+        show: false,
+        type: 'success',
+        text: ''
+      }
     }
   },
   methods: {
     forgotPassword() {
-      this.userForgotPassword(this.username, (success, data) => {
+      this.userForgotPassword(this.username, (success, error) => {
         if (success) {
+          this.alert.show = false;
           this.element = 2;
         } else {
-          console.log(data);
+          // Show error message
+          this.alert.show = true;
+          this.alert.text = "Username does not exist.";
+          this.alert.type = "error";
         }
       });
     },
 
     VerifyCode() {
-      this.confirmResetPassword(this.username, this.verificationCode, this.newPassword, (success, data) => {
+      this.confirmResetPassword(this.username, this.verificationCode, this.newPassword, (success, error) => {
         if (success) {
-          this.element = 3;
+          this.alert.show = false;
+          this.$router.push('/login');
         } else {
-          console.log(data);
-          // Display errors
+          this.alert.show = true;
+          this.alert.text = error.message;
+          this.alert.type = "error";
         }
       });
     }

@@ -67,16 +67,15 @@ export default {
       this.loader.show = true;
       this.alert.show = false;
 
-      this.register_user(this.email, this.username, this.password, result => {
+      this.register_user(this.email, this.username, this.password, (success, error) => {
 
         // Hide Loader
         this.loader.show = false;
 
-        if (result === false) {
+        if (!success) {
           // Show error message
-          // FIXME: add detailed error message
           this.alert.show = true;
-          this.alert.text = "Error Signing Up";
+          this.alert.text = error.message;
           this.alert.type = "error";
           return;
         }
