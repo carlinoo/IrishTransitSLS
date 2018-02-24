@@ -1,6 +1,17 @@
 <template>
   <v-flex xs12 sm6 offset-sm3 back>
-    <br><br>
+
+    <br>
+    <!-- Loader -->
+    <v-progress-linear v-if="loader.show" :indeterminate="true"></v-progress-linear>
+
+    <!-- Alert -->
+    <v-alert :type="alert.type" dismissible v-model="alert.show">
+      {{ alert.text }}
+    </v-alert>
+
+
+    <br>
       <v-card>
         <v-card-title primary-title>
           <div>
@@ -37,24 +48,50 @@ export default {
     return {
       username: '',
       password: '',
-      email: ''
+      email: '',
+      loader: {
+        show: false
+      },
+      alert: {
+        show: false,
+        type: 'success',
+        text: ''
+      }
     }
   },
   methods: {
     signup: function() {
 
-      var vm = this;
+      // Show loader and hide alert
+      this.loader.show = true;
+      this.alert.show = false;
 
-      this.register_user(this.email, this.username, this.password, function(result) {
+      this.register_user(this.email, this.username, this.password, result => {
+
+        // Hide Loader
+        this.loader.show = false;
+
         if (result === false) {
-          console.log("Error Signing Up");
+          // Show error message
+          // FIXME: add detailed error message
+          this.alert.show = true;
+          this.alert.text = "Error Signing Up";
+          this.alert.type = "error";
           return;
         }
 
         console.log(result);
-        vm.$router.push("/confirm");
+        this.$router.push("/confirm");
       });
     }
   }
 }
 </script>
+
+
+<style media="screen" >
+  .content {
+    background-color: #C9D3D8;
+  }
+
+</style>
