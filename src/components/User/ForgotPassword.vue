@@ -41,6 +41,7 @@
                 <v-text-field
                   label="New Password"
                   v-model="newPassword"
+                  type="password"
                 ></v-text-field>
                 <br>
                 <v-btn color="primary" @click="VerifyCode">Continue</v-btn>
