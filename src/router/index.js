@@ -4,6 +4,7 @@ import Home from '../components/Home'
 import LogIn from '../components/User/LogIn'
 import SignUp from '../components/User/SignUp'
 import ConfirmUser from '../components/User/Confirm'
+import ForgotPassword from '../components/User/ForgotPassword'
 
 Vue.use(Router)
 
@@ -40,6 +41,15 @@ export default new Router({
       path: '/confirm',
       name: 'ConfirmUser',
       component: ConfirmUser,
+      meta: {
+        authRequired: false,
+        registeredVisible: false
+      }
+    },
+    {
+      path: '/forgotpassword',
+      name: 'ForgotPassword',
+      component: ForgotPassword,
       meta: {
         authRequired: false,
         registeredVisible: false

@@ -66,6 +66,44 @@ export default {
   },
 
 
+  userForgotPassword(username, callback) {
+    var userPool = new CognitoUserPool(poolData);
+    var userData = {
+        Username : username,
+        Pool : userPool
+    };
+
+    var cognitoUser = new CognitoUser(userData);
+
+    cognitoUser.forgotPassword({
+        onSuccess: function(data) {
+            callback(true, data);
+        },
+        onFailure: function(err) {
+            callback(false, err);
+        }
+    });
+  },
+
+
+  confirmResetPassword(username, verificationCode, newPassword, callback) {
+    var userPool = new CognitoUserPool(poolData);
+    var userData = {
+        Username : username,
+        Pool : userPool
+    };
+
+    cognitoUser.confirmPassword(verificationCode, newPassword, {
+        onSuccess() {
+            callback(true);
+        },
+        onFailure(err) {
+            callback(false);
+        }
+    });
+  },
+
+
 
   // To check if a user is checked
   // user_signed_in(callback) {

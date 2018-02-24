@@ -42,6 +42,12 @@ Vue.mixin({
     },
     cognitoUserToken: function(callback) {
       return cognito_functions.cognitoUserToken(callback);
+    },
+    userForgotPassword: function(username, callback) {
+      return cognito_functions.userForgotPassword(username, callback);
+    },
+    confirmResetPassword: function(username, verificationCode, newPassword, callback) {
+      return cognito_functions.confirmResetPassword(username, verificationCode, newPassword, callback);
     }
   }
 })
