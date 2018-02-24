@@ -189,7 +189,7 @@ export default {
             callback != null && callback(false);
             return false
         }
-        cognitoUser = result.user;
+        var cognitoUser = result.user;
         console.log('user name is ' + cognitoUser.getUsername());
         callback != null && callback(cognitoUser);
         return true;
