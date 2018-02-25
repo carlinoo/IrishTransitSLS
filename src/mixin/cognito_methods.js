@@ -291,14 +291,23 @@ export default {
     var userPool = new CognitoUserPool(poolData);
     var cognitoUser = userPool.getCurrentUser();
 
-
-    cognitoUser.listDevices(100, null, {
-        onSuccess: function (result) {
-            callback(true, result);
-        },
-        onFailure: function(err) {
+    // Get the session
+    cognitoUser.getSession(function(err, session) {
+      if (err) {
+          console.error(err);
           callback(false, err);
-        }
+          return;
+      }
+
+      cognitoUser.listDevices(60, null, {
+          onSuccess: function (result) {
+              callback(true, result);
+          },
+          onFailure: function(err) {
+            callback(false, err);
+          }
+      });
     });
+
   }
 }

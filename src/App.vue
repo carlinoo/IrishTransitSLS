@@ -55,17 +55,14 @@ import Header from './components/Layout/Header';
     created() {
       this.user_signed_in((bool) => this.loggedin = bool);
 
-      // this.$http({
-      //    url: 'https://9g52fgy0ze.execute-api.eu-west-1.amazonaws.com/dev',
-      //    method: 'POST'
-      // }).then(response => {
-      //   console.log(response);
-      // });
-
-
-      this.user_list_devices('carlinoo', (success, data) => {
-        console.log(success, data);
+      this.$http({
+         url: 'https://9g52fgy0ze.execute-api.eu-west-1.amazonaws.com/dev',
+         method: 'POST'
+      }).then(response => {
+        console.log(response);
       });
+
+
     },
     asyncComputed: {
       logged_in: function() {
