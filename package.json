@@ -11,6 +11,7 @@
   "dependencies": {
     "amazon-cognito-identity-js": "^1.31.0",
     "aws-sdk": "2.192.0",
+    "axios": "^0.18.0",
     "vue": "^2.5.3",
     "vue-async-computed": "^3.3.1",
     "vuetify": "^0.17.4"

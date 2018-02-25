@@ -281,5 +281,24 @@ export default {
         console.log('call result: ' + result);
         callback != null && callback(true);
     });
+  },
+
+
+
+
+  user_list_devices(username, callback) {
+
+    var userPool = new CognitoUserPool(poolData);
+    var cognitoUser = userPool.getCurrentUser();
+
+
+    cognitoUser.listDevices(100, null, {
+        onSuccess: function (result) {
+            callback(true, result);
+        },
+        onFailure: function(err) {
+          callback(false, err);
+        }
+    });
   }
 }
