@@ -62,9 +62,6 @@ import Header from './components/Layout/Header';
       //   console.log(response);
       // });
 
-      this.current_user((user, err) => {
-        console.log(user);
-      });
 
 
     },
