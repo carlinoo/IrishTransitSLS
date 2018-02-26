@@ -165,27 +165,25 @@ export default {
 
 
   // To get the current user
-  current_user(callback = null) {
+  current_user(callback) {
     var userPool = new CognitoUserPool(poolData);
     var cognitoUser = userPool.getCurrentUser();
 
     if (cognitoUser == null) {
-      return null;
+      callback(null, null);
     }
 
     cognitoUser.getSession(function(err, session) {
       if (err) {
           console.error(err);
-          callback != null && callback(false);
-          return;
+          callback(null, err);
       }
 
       cognitoUser.getUserAttributes(function(err, attributes) {
           if (err) {
-              console.error(err);
+              callback(null, err);
           } else {
-            console.log(attributes);
-            callback != null && callback(attributes);
+            callback(attributes, null);
           }
       });
     });

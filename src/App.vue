@@ -57,7 +57,7 @@ import Header from './components/Layout/Header';
 
       this.$http({
          url: 'https://9g52fgy0ze.execute-api.eu-west-1.amazonaws.com/dev',
-         method: 'POST'
+         method: 'GET'
       }).then(response => {
         console.log(response);
       });
