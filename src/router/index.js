@@ -4,6 +4,7 @@ import Home from '../components/Home'
 import LogIn from '../components/User/LogIn'
 import SignUp from '../components/User/SignUp'
 import ConfirmUser from '../components/User/Confirm'
+import EditProfile from '../components/User/EditProfile'
 import ForgotPassword from '../components/User/ForgotPassword'
 
 Vue.use(Router)
@@ -53,6 +54,15 @@ export default new Router({
       meta: {
         authRequired: false,
         registeredVisible: false
+      }
+    },
+    {
+      path: '/editprofile',
+      name: 'EditProfile',
+      component: EditProfile,
+      meta: {
+        authRequired: true,
+        registeredVisible: true
       }
     }
   ]

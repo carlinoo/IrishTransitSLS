@@ -56,3 +56,9 @@
 
   }
 </script>
+
+<style media="screen">
+.content {
+  background-color: #C9D3D8;
+}
+</style>
