@@ -25,8 +25,8 @@ Vue.mixin({
     user_signed_in: function(callback) {
       return cognito_functions.user_signed_in(callback);
     },
-    current_user: function() {
-      return cognito_functions.current_user();
+    current_user: function(callback) {
+      return cognito_functions.current_user(callback);
     },
     user_sign_out: function() {
       return cognito_functions.user_sign_out();

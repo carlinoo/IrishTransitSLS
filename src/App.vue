@@ -55,11 +55,15 @@ import Header from './components/Layout/Header';
     created() {
       this.user_signed_in((bool) => this.loggedin = bool);
 
-      this.$http({
-         url: 'https://9g52fgy0ze.execute-api.eu-west-1.amazonaws.com/dev',
-         method: 'GET'
-      }).then(response => {
-        console.log(response);
+      // this.$http({
+      //    url: 'https://9g52fgy0ze.execute-api.eu-west-1.amazonaws.com/dev',
+      //    method: 'GET'
+      // }).then(response => {
+      //   console.log(response);
+      // });
+
+      this.current_user((user, err) => {
+        console.log(user);
       });
 
 
