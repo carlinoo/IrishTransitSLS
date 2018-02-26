@@ -1,6 +1,17 @@
 <template>
   <v-flex xs12 sm6 offset-sm3 back>
-    <br><br>
+    <br>
+
+    <!-- Progress Bar -->
+    <v-progress-linear v-if="loader.show" :indeterminate="true"></v-progress-linear>
+
+
+    <!-- Alert -->
+    <v-alert :type="alert.type" dismissible v-model="alert.show">
+      {{ alert.text }}
+    </v-alert>
+
+    <br>
       <v-card>
         <v-card-title primary-title>
           <div>
@@ -36,11 +47,24 @@ export default {
   data() {
     return {
       email: '',
-      phone_number: ''
+      phone_number: '',
+      alert: {
+        text: "",
+        show: false,
+        type: "success"
+      },
+      loader: {
+        show: false
+      }
     }
   },
   methods: {
     update_profile() {
+      // Show progress bar and hide alert
+      this.loader.show = true;
+      this.alert.show = false;
+
+      // Get attributes and add them to an array
       var attributes = [];
       attributes.push({
         Name: 'email',
@@ -52,7 +76,17 @@ export default {
       });
 
       this.userUpdateAttributes(attributes, (success, result) => {
-        console.log(success, result);
+        this.loader.show = false;
+
+        if (success) {
+          this.alert.text = "Profile Updated Successfully";
+          this.alert.type = "success";
+          this.alert.show = true;
+        } else {
+          this.alert.text = "There's has been an error, please try later";
+          this.alert.type = "error";
+          this.alert.show = true;
+        }
       });
     }
   },
