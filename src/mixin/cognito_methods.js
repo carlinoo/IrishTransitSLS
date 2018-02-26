@@ -222,7 +222,7 @@ export default {
 
 
   // Sign out a user
-  user_sign_out() {
+  user_sign_out(globally = false, callback) {
     var userPool = new CognitoUserPool(poolData);
     var cognitoUser = userPool.getCurrentUser();
 
@@ -230,7 +230,11 @@ export default {
       return false;
     }
 
-    cognitoUser.signOut();
+    if (globally === false) {
+      cognitoUser.signOut();
+    } else {
+      cognitoUser.globalSignOut(callback);
+    }
     return true;
   },
 

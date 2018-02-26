@@ -10,7 +10,7 @@
       </v-toolbar-title>
 
       <div class="d-flex align-center" style="margin-left: auto">
-        <v-btn v-if="true" href="/" icon >
+        <v-btn v-if="true" v-on:click="$router.push('EditProfile')" icon >
           <v-icon>edit</v-icon>
         </v-btn>
         <v-btn v-if="loggedin" icon v-on:click="sign_out()">

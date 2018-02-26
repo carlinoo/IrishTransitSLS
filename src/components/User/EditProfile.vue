@@ -95,7 +95,7 @@ export default {
       if (user == null) {
         return;
       } else {
-        console.log(user);
+        
         for (var i = 0; i < user.length; i++) {
           if (user[i].Name == 'email') {
             this.email = user[i].Value;
@@ -105,6 +105,7 @@ export default {
         }
       }
     });
+
   }
 }
 
