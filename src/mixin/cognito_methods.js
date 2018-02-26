@@ -66,6 +66,36 @@ export default {
   },
 
 
+  // Method oto update User attributes
+  userUpdateAttributes(attributes, callback) {
+
+    var userPool = new CognitoUserPool(poolData);
+    var cognitoUser = userPool.getCurrentUser();
+
+    var attributeList = [];
+
+    for (var i = 0; i < attributes.length; i++) {
+      var attribute = new CognitoUserAttribute(attributes[i]);
+      attributeList.push(attribute);
+    }
+
+    cognitoUser.getSession(function(err, session) {
+       if (err) {
+          callback(false, err);
+       }
+
+      cognitoUser.updateAttributes(attributeList, function(err, result) {
+          if (err) {
+              callback(false, err);
+              return;
+          }
+          callback(true, result);
+      });
+
+    });
+  },
+
+
   userForgotPassword(username, callback) {
     var userPool = new CognitoUserPool(poolData);
     var userData = {

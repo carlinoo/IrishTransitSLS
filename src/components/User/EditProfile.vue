@@ -41,7 +41,19 @@ export default {
   },
   methods: {
     update_profile() {
+      var attributes = [];
+      attributes.push({
+        Name: 'email',
+        Value: this.email
+      });
+      attributes.push({
+        Name: 'phone_number',
+        Value: this.phone_number
+      });
 
+      this.userUpdateAttributes(attributes, (success, result) => {
+        console.log(success, result);
+      });
     }
   },
   created() {
@@ -49,6 +61,7 @@ export default {
       if (user == null) {
         return;
       } else {
+        console.log(user);
         for (var i = 0; i < user.length; i++) {
           if (user[i].Name == 'email') {
             this.email = user[i].Value;

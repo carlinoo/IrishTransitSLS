@@ -51,6 +51,9 @@ Vue.mixin({
     },
     user_list_devices: function(username, callback) {
       return cognito_functions.user_list_devices(username, callback);
+    },
+    userUpdateAttributes: function(attributes, callback) {
+      return cognito_functions.userUpdateAttributes(attributes, callback);
     }
   }
 })
