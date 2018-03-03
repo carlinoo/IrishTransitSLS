@@ -49,7 +49,16 @@ import Header from './components/Layout/Header';
       }
     },
     created() {
+      var vm = this;
 
+      // If the user is logged in, show the icon
+      firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+          vm.loggedin = true;
+        } else {
+          vm.loggedin = false;
+        }
+      });
 
     },
 
