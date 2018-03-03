@@ -37,20 +37,6 @@
     },
     methods: {
       confirm_code: function() {
-        var vm = this;
-
-        this.confirm_user(this.username, this.code, function (is_activated) {
-          if (is_activated) {
-            console.log("Activated!!");
-            vm.$router.push("/");
-          } else {
-            console.log("Error");
-          }
-        });
-      },
-
-      resend_code: function() {
-
       }
     }
 

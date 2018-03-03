@@ -5,58 +5,11 @@ import 'vuetify/dist/vuetify.css'
 import router from './router'
 import VueResource from 'vue-resource'
 import AsyncComputed from 'vue-async-computed'
-import cognito_functions from './mixin/cognito_methods'
 
 Vue.use(Vuetify);
 Vue.use(VueResource);
 Vue.use(AsyncComputed);
 
-
-cognito_functions.cognitoUserToken(function(token) {
-  Vue.http.headers.common['Authorization'] = token;
-});
-
-// Mixing for cognito
-Vue.mixin({
-  methods: {
-    login_user: function (username, password, callback) {
-      return cognito_functions.login_user(username, password, callback);
-    },
-    user_signed_in: function(callback) {
-      return cognito_functions.user_signed_in(callback);
-    },
-    current_user: function(callback) {
-      return cognito_functions.current_user(callback);
-    },
-    user_sign_out: function(globally, callback) {
-      return cognito_functions.user_sign_out(globally, callback);
-    },
-    register_user: function(email, username, password, callback) {
-      return cognito_functions.register_user(email, username, password, callback);
-    },
-    confirm_user: function(username, password, callback) {
-      return cognito_functions.confirm_user(username, password, callback);
-    },
-    resend_code_user: function(username) {
-      return cognito_functions.resend_code_user(username);
-    },
-    cognitoUserToken: function(callback) {
-      return cognito_functions.cognitoUserToken(callback);
-    },
-    userForgotPassword: function(username, callback) {
-      return cognito_functions.userForgotPassword(username, callback);
-    },
-    confirmResetPassword: function(username, verificationCode, newPassword, callback) {
-      return cognito_functions.confirmResetPassword(username, verificationCode, newPassword, callback);
-    },
-    user_list_devices: function(username, callback) {
-      return cognito_functions.user_list_devices(username, callback);
-    },
-    userUpdateAttributes: function(attributes, callback) {
-      return cognito_functions.userUpdateAttributes(attributes, callback);
-    }
-  }
-})
 
 
 router.beforeEach((to, from, next) => {
@@ -64,27 +17,30 @@ router.beforeEach((to, from, next) => {
 
     // Check if the user s signed in,
     // if not, go to /login
-    cognito_functions.user_signed_in(function (user_signed_in, cognitoUser) {
-      if (!user_signed_in) {
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        // User is signed in.
+        next();
+      } else {
         next({
           path:'/login'
         })
-      } else {
-        next()
       }
     });
 
   } else {
     // Users cannot see sessions paths when they are signed in
-    cognito_functions.user_signed_in(function (user_signed_in, cognitoUser) {
-      if (user_signed_in) {
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        // User is signed in.
         next({
           path:'/'
-        })
+        });
       } else {
-        next()
+        next();
       }
     });
+
   }
 });
 
