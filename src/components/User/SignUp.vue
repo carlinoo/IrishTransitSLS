@@ -26,10 +26,6 @@
           type="email"
         ></v-text-field>
         <v-text-field
-        label="Username"
-        v-model="username"
-        ></v-text-field>
-        <v-text-field
           label="Password"
           v-model="password"
           type="password"
@@ -47,7 +43,6 @@
 export default {
   data() {
     return {
-      username: '',
       password: '',
       email: '',
       loader: {
@@ -67,22 +62,21 @@ export default {
       this.loader.show = true;
       this.alert.show = false;
 
-      this.register_user(this.email, this.username, this.password, (success, error) => {
+      var vm = this;
 
-        // Hide Loader
-        this.loader.show = false;
+      firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
+      .catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
 
-        if (!success) {
-          // Show error message
-          this.alert.show = true;
-          this.alert.text = error.message;
-          this.alert.type = "error";
-          return;
-        }
+        vm.alert.text = errorMessage;
+        vm.alert.type = "error";
+        vm.alert.show = true;
 
-        console.log(result);
-        this.$router.push("/confirm");
       });
+
+      this.loader.show = false;
     }
   }
 }

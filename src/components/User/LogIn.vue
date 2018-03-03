@@ -81,25 +81,25 @@
         var vm = this;
 
         firebase.auth().signInAndRetrieveDataWithEmailAndPassword(this.email, this.password)
-          .catch(function(error) {
-            // Handle Errors here.
-            var errorCode = error.code;
-            var errorMessage = error.message;
+        .catch(function(error) {
+          // Handle Errors here.
+          var errorCode = error.code;
+          var errorMessage = error.message;
 
-            // If the password is wrong, show an error message
-            if (errorCode === 'auth/wrong-password') {
-              vm.alert.text = "Wrong Password";
-              vm.alert.type = "error";
-              vm.alert.show = true;
+          // If the password is wrong, show an error message
+          if (errorCode === 'auth/wrong-password') {
+            vm.alert.text = "Wrong Password";
+            vm.alert.type = "error";
+            vm.alert.show = true;
 
-            } else {
-              vm.alert.text = errorMessage;
-              vm.alert.type = "error";
-              vm.alert.show = true;
-            }
-          });
+          } else {
+            vm.alert.text = errorMessage;
+            vm.alert.type = "error";
+            vm.alert.show = true;
+          }
+        });
 
-          this.loader.show = false;
+        this.loader.show = false;
       }
     }
   }
