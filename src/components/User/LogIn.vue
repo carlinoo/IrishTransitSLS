@@ -21,8 +21,8 @@
         </v-card-title>
         <v-card-text>
           <v-text-field
-      label="Username"
-      v-model="username"
+      label="Email"
+      v-model="email"
     ></v-text-field>
     <v-text-field
       label="Password"
@@ -56,7 +56,7 @@
   export default {
     data () {
       return {
-        username: '',
+        email: '',
         password: '',
         snackbar: {
           text: '',
@@ -72,33 +72,34 @@
         }
       }
     },
-    created() {
-
-    },
     methods: {
       login: function() {
 
         this.loader.show = true;
         this.alert.show = false;
 
-        this.login_user(this.username, this.password, (is_signed, error) => {
-          if (is_signed) {
-            this.snackbar.text = "Successfully logged in";
-            this.snackbar.show = true;
-            this.alert.text = "Successfully logged in";
-            this.alert.type = "success";
-            this.alert.show = true;
-            this.$router.push('/');
-          } else {
-            // Show alert
-            this.alert.text = error.message;
-            this.alert.type = "error";
-            this.alert.show = true;
-          }
+        var vm = this;
+
+        firebase.auth().signInAndRetrieveDataWithEmailAndPassword(this.email, this.password)
+          .catch(function(error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+
+            // If the password is wrong, show an error message
+            if (errorCode === 'auth/wrong-password') {
+              vm.alert.text = "Wrong Password";
+              vm.alert.type = "error";
+              vm.alert.show = true;
+
+            } else {
+              vm.alert.text = errorMessage;
+              vm.alert.type = "error";
+              vm.alert.show = true;
+            }
+          });
 
           this.loader.show = false;
-        });
-
       }
     }
   }

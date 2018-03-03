@@ -43,7 +43,7 @@ import Header from './components/Layout/Header';
     },
     methods: {
       sign_out: function() {
-        // logout
+        firebase.auth().signOut();
         this.loggedin = false;
         this.$router.push('/login');
       }
@@ -52,7 +52,7 @@ import Header from './components/Layout/Header';
 
 
     },
-    
+
     components: {
       'v-header': Header
     }
