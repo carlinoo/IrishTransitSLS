@@ -6,6 +6,7 @@ import SignUp from '../components/User/SignUp'
 import ConfirmUser from '../components/User/Confirm'
 import EditProfile from '../components/User/EditProfile'
 import ForgotPassword from '../components/User/ForgotPassword'
+import ResetPassword from '../components/User/ResetPassword'
 
 Vue.use(Router)
 
@@ -51,6 +52,15 @@ export default new Router({
       path: '/forgotpassword',
       name: 'ForgotPassword',
       component: ForgotPassword,
+      meta: {
+        authRequired: false,
+        registeredVisible: false
+      }
+    },
+    {
+      path: '/reset_password',
+      name: 'ResetPassword',
+      component: ResetPassword,
       meta: {
         authRequired: false,
         registeredVisible: false

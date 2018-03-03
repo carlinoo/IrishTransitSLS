@@ -15,15 +15,23 @@
       <v-card>
         <v-card-title primary-title>
           <div>
-            <h3 class="headline mb-0">Forgot Password</h3>
+            <h3 class="headline mb-0">Reset Password</h3>
           </div>
         </v-card-title>
         <v-card-text>
-
         <v-text-field
-          label="Email"
-          v-model="email"
-          type="email"
+          label="Code"
+          v-model="code"
+        ></v-text-field>
+        <v-text-field
+          label="New Password"
+          v-model="password"
+          type="password"
+        ></v-text-field>
+        <v-text-field
+          label="Repeat Password"
+          v-model="repeat_password"
+          type="password"
         ></v-text-field>
         </v-card-text>
         <v-card-actions>
@@ -38,7 +46,9 @@
 export default {
   data() {
     return {
-      email: '',
+      code: '',
+      password: '',
+      repeat_password: '',
       loader: {
         show: false
       },
@@ -49,6 +59,9 @@ export default {
       }
     }
   },
+  created() {
+    this.code = this.$route.query.oobCode;
+  },
   methods: {
     reset_password: function() {
 
@@ -58,10 +71,19 @@ export default {
 
       var vm = this;
 
-      firebase.auth().sendPasswordResetEmail(this.email, null)
+      // Check if both password are the same
+      if (this.password !== this.repeat_password) {
+        vm.alert.text = "Passwords do not match.";
+        vm.alert.type = "error";
+        vm.alert.show = true;
+        return;
+      }
+
+
+      firebase.auth().confirmPasswordReset(this.code, this.password)
       .then(function() {
         // Password reset email sent.
-        vm.alert.text = "An Email has been sent to change the password";
+        vm.alert.text = "Congratulations! Password has been set";
         vm.alert.type = "success";
         vm.alert.show = true;
       })
