@@ -82,9 +82,10 @@ export default {
       this.loader.show = true;
       this.alert.show = false;
 
-      var usersRef = firebase.database().ref('users/' + firebase.auth().currentUser.uid);
+      var usersRef = firebase.database().ref('users');
+      var userRef = usersRef.child(firebase.auth().currentUser.uid);
 
-      usersRef.set({
+      userRef.set({
         phone_number: this.phone_number,
         first_name: this.first_name,
         last_name: this.last_name,
@@ -106,22 +107,15 @@ export default {
 
     this.email = firebase.auth().currentUser.email;
 
-    var userRef = firebase.database().ref('users/' + firebase.auth().currentUser.uid);
-
-    // If the user does not have a profile, we create it
-    userRef.once('value', function(snapshot) {
-      var exists = (snapshot.val() !== null);
-
-      if (!exists) {
-        firebase.database().ref('users/').set({
-          [firebase.auth().currentUser.uid]: {
-
-          }
-        })
-      }
-    });
+    var usersRef = firebase.database().ref('users');
+    var userRef = usersRef.child(firebase.auth().currentUser.uid);
 
     userRef.on('value', function (snap) {
+      // If there is no user created
+      if (snap.val() == null) {
+        vm.loader.show = false;
+        return;
+      }
      vm.phone_number = snap.val().phone_number;
      vm.first_name = snap.val().first_name;
      vm.last_name = snap.val().last_name;

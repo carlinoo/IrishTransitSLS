@@ -16,10 +16,13 @@
     created() {
       var vm = this;
 
-      var usersRef = firebase.database().ref('users/' + firebase.auth().currentUser.uid);
+      var usersRef = firebase.database().ref('users/');
+
+      var userRef = usersRef.child(firebase.auth().currentUser.uid);
+
 
       // Create a new ref and log it’s push key
-      usersRef.on('value', function (snap) {
+      userRef.on('value', function (snap) {
        vm.dog = snap.val(); // Keep the local user object synced with the Firebase userRef
       });
 
