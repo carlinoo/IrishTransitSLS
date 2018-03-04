@@ -6,6 +6,7 @@ import SignUp from '../components/User/SignUp'
 import EditProfile from '../components/User/EditProfile'
 import ForgotPassword from '../components/User/ForgotPassword'
 import ResetPassword from '../components/User/ResetPassword'
+import AllMessages from '../components/Messages/AllMessages'
 
 Vue.use(Router)
 
@@ -60,6 +61,15 @@ export default new Router({
       path: '/editprofile',
       name: 'EditProfile',
       component: EditProfile,
+      meta: {
+        authRequired: true,
+        registeredVisible: true
+      }
+    },
+    {
+      path: '/messages',
+      name: 'AllMessages',
+      component: AllMessages,
       meta: {
         authRequired: true,
         registeredVisible: true
