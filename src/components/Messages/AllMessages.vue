@@ -42,6 +42,18 @@
           { avatar: '/static/doc-images/lists/5.jpg', title: 'Recipe to try', from: "Britta Holt", subtitle: "We should eat this: Grate, Squash, Corn, and tomatillo Tacos." }
         ]
       }
+    },
+
+    created() {
+      var chat = firebase.database().ref('chat');
+
+      var rooms = chat.child('room_names');
+
+
+      // Create a new ref and log it’s push key
+      rooms.on('value', function (snap) {
+       console.log(snap.val()); // Keep the local user object synced with the Firebase userRef
+      });
     }
   }
 
