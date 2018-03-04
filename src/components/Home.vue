@@ -1,4 +1,7 @@
 <template>
+  <div>
+    <h3>{{ dog }}</h3>
+  </div>
 
 </template>
 
@@ -6,20 +9,20 @@
   export default {
     data() {
       return {
-
+        dog: ''
       }
     },
 
     created() {
-      // this.$http({
-      //    url: 'https://svbnq2230e.execute-api.eu-west-1.amazonaws.com/dev/hello',
-      //    method: 'GET'
-      // }).then(response => {
-      //   console.log(response);
-      // });
+      var vm = this;
 
+      var usersRef = firebase.database().ref('users/' + firebase.auth().currentUser.uid);
 
-      // console.log(Vue.http.headers.common);
+      // Create a new ref and log it’s push key
+      usersRef.on('value', function (snap) {
+       vm.dog = snap.val(); // Keep the local user object synced with the Firebase userRef
+      });
+
     }
   }
 </script>

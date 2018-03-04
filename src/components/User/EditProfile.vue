@@ -19,17 +19,32 @@
           </div>
         </v-card-title>
         <v-card-text>
-
           <v-text-field
-      label="Email Address"
-      v-model="email"
-      type="text"
-    ></v-text-field>
-    <v-text-field
-      label="Phone Number"
-      v-model="phone_number"
-      type="text"
-    ></v-text-field>
+            label="Email Address"
+            v-model="email"
+            type="text"
+            disabled
+          ></v-text-field>
+          <v-text-field
+            label="First Name"
+            v-model="first_name"
+            type="text"
+          ></v-text-field>
+          <v-text-field
+            label="Last Name"
+            v-model="last_name"
+            type="text"
+          ></v-text-field>
+          <v-text-field
+            label="Phone Number"
+            v-model="phone_number"
+            type="text"
+          ></v-text-field>
+          <v-text-field
+            label="age"
+            v-model="age"
+            type="number"
+          ></v-text-field>
 
         </v-card-text>
         <v-card-actions>
@@ -48,6 +63,9 @@ export default {
     return {
       email: '',
       phone_number: '',
+      last_name: '',
+      first_name: '',
+      age: '',
       alert: {
         text: "",
         show: false,
@@ -64,48 +82,52 @@ export default {
       this.loader.show = true;
       this.alert.show = false;
 
-      // Get attributes and add them to an array
-      var attributes = [];
-      attributes.push({
-        Name: 'email',
-        Value: this.email
-      });
-      attributes.push({
-        Name: 'phone_number',
-        Value: this.phone_number
+      var usersRef = firebase.database().ref('users/' + firebase.auth().currentUser.uid);
+
+      usersRef.set({
+        phone_number: this.phone_number,
+        first_name: this.first_name,
+        last_name: this.last_name,
+        age: this.age
       });
 
-      this.userUpdateAttributes(attributes, (success, result) => {
-        this.loader.show = false;
-
-        if (success) {
-          this.alert.text = "Profile Updated Successfully";
-          this.alert.type = "success";
-          this.alert.show = true;
-        } else {
-          this.alert.text = "There's has been an error, please try later";
-          this.alert.type = "error";
-          this.alert.show = true;
-        }
-      });
+      this.loader.show = false;
+      this.alert.show = true;
+      this.alert.text = "Profile has been updated";
+      this.alert.type = "success";
     }
   },
+
+
+
   created() {
-    this.current_user((user, err) => {
-      if (user == null) {
-        return;
-      } else {
-        
-        for (var i = 0; i < user.length; i++) {
-          if (user[i].Name == 'email') {
-            this.email = user[i].Value;
-          } else if (user[i].Name == 'phone_number') {
-            this.phone_number = user[i].Value;
+    this.loader.show = true;
+    var vm = this;
+
+    this.email = firebase.auth().currentUser.email;
+
+    var userRef = firebase.database().ref('users/' + firebase.auth().currentUser.uid);
+
+    // If the user does not have a profile, we create it
+    userRef.once('value', function(snapshot) {
+      var exists = (snapshot.val() !== null);
+
+      if (!exists) {
+        firebase.database().ref('users/').set({
+          [firebase.auth().currentUser.uid]: {
+
           }
-        }
+        })
       }
     });
 
+    userRef.on('value', function (snap) {
+     vm.phone_number = snap.val().phone_number;
+     vm.first_name = snap.val().first_name;
+     vm.last_name = snap.val().last_name;
+     vm.age = snap.val().age;
+     vm.loader.show = false;
+    });
   }
 }
 
