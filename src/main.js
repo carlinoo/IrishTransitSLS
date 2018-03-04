@@ -10,6 +10,18 @@ Vue.use(Vuetify);
 Vue.use(VueResource);
 Vue.use(AsyncComputed);
 
+var sha256 = require('js-sha256').sha256;
+
+
+// mixin to get sha256 method
+Vue.mixin({
+  methods: {
+    sha256: function(string) {
+      return sha256(string);
+    }
+  }
+});
+
 
 
 router.beforeEach((to, from, next) => {
@@ -49,5 +61,6 @@ router.beforeEach((to, from, next) => {
 new Vue({
   el: '#app',
   router: router,
+  sha256: sha256,
   render: h => h(App)
 })

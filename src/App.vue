@@ -10,10 +10,11 @@
       </v-toolbar-title>
 
       <div class="d-flex align-center" style="margin-left: auto">
+
         <v-btn v-if="loggedin" icon v-on:click="$router.push('/messages')">
           <v-icon href="/">chat_bubble</v-icon>
         </v-btn>
-        
+
         <v-btn v-if="loggedin" v-on:click="$router.push('EditProfile')" icon >
           <v-icon>edit</v-icon>
         </v-btn>
