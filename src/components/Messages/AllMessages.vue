@@ -48,12 +48,14 @@
       var chat = firebase.database().ref('chat');
 
       var rooms = chat.child('room_names');
+      var uid = firebase.database().uid;
 
       // Create a new ref and log it’s push key
       rooms.on('value', (snap) => {
        this.items = snap.val();
        console.log(snap.val());
       });
+
     }
   }
 
