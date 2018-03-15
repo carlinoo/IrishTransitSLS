@@ -10,6 +10,7 @@ Vue.use(Vuetify);
 Vue.use(VueResource);
 Vue.use(AsyncComputed);
 
+
 var sha256 = require('js-sha256').sha256;
 
 
@@ -23,6 +24,9 @@ Vue.mixin({
     getChatroomID: function(user1, user2) {
       var room = (user1 > user2) ? (user2 + '_' + user1) : (user1 + '_' + user2);
       return sha256(room);
+    },
+    corsAnywhere: function(string) {
+      return "https://cors-anywhere.herokuapp.com/" + string
     }
   }
 });
