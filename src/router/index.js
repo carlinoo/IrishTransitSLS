@@ -6,8 +6,8 @@ import SignUp from '../components/User/SignUp'
 import EditProfile from '../components/User/EditProfile'
 import ForgotPassword from '../components/User/ForgotPassword'
 import ResetPassword from '../components/User/ResetPassword'
-import AllMessages from '../components/Messages/AllMessages'
-import Message from '../components/Messages/Message'
+import Profile from '../components/User/Profile'
+
 
 Vue.use(Router)
 
@@ -68,18 +68,9 @@ export default new Router({
       }
     },
     {
-      path: '/messages',
-      name: 'AllMessages',
-      component: AllMessages,
-      meta: {
-        authRequired: true,
-        registeredVisible: true
-      }
-    },
-    {
-      path: '/message/:id',
-      name: 'Message',
-      component: Message,
+      path: '/profile',
+      name: 'Profile',
+      component: Profile,
       meta: {
         authRequired: true,
         registeredVisible: true

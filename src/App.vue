@@ -6,13 +6,13 @@
       clipped-left
       fixed>
       <v-toolbar-title class="ml-0 pl-3">
-        <span v-on:click="$router.push('/')" style="cursor:pointer" class="hidden-xss-only">WebDep - CoderDojo</span>
+        <span v-on:click="$router.push('/')" style="cursor:pointer" class="hidden-xss-only">IrishTransit</span>
       </v-toolbar-title>
 
       <div class="d-flex align-center" style="margin-left: auto">
 
-        <v-btn v-if="loggedin" icon v-on:click="$router.push('/messages')">
-          <v-icon href="/">chat_bubble</v-icon>
+        <v-btn v-if="loggedin" icon v-on:click="$router.push('/profile')">
+          <v-icon href="/">person</v-icon>
         </v-btn>
 
         <v-btn v-if="loggedin" v-on:click="$router.push('EditProfile')" icon >
