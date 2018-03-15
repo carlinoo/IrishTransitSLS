@@ -1,5 +1,30 @@
 <template>
   <div>
+    <v-flex xs12 sm6 offset-sm3 >
+     <v-card class="dublin_bus_search">
+         <div>
+           <input id="dublin_bus_search" v-model="input" type="text">
+         </div>
+     </v-card>
+   </v-flex>
+
+   <br><br>
+
+   <v-flex xs12 sm6 >
+     <v-list>
+       <v-list-tile avatar v-for="(name, stop) in bus_stops" @click="">
+         <v-list-tile-avatar>
+           <v-icon>chat_bubble</v-icon>
+          </v-list-tile-avatar>
+         <v-list-tile-content>
+           <v-list-tile-title>{{ stop }}</v-list-tile-title>
+         </v-list-tile-content>
+         <v-list-tile-action>
+           <v-icon>chat_bubble</v-icon>
+         </v-list-tile-action>
+       </v-list-tile>
+     </v-list>
+   </v-flex>
 
   </div>
 </template>
@@ -11,7 +36,8 @@
     data() {
       return {
         bus_stops: [],
-        bus_routes: []
+        bus_routes: [],
+        input: ""
       }
     },
 
@@ -90,3 +116,33 @@
     }
   }
 </script>
+
+
+<style media="screen" scoped>
+  .dublin_bus_search {
+    margin-top: 14px !important;
+  }
+
+
+  #dublin_bus_search {
+    padding-top: -7px;
+    width: 100%;
+    height: 100%;
+    font-size: 24px;
+    padding-left: 7px;
+    text-align: center;
+    color: $primary-color;
+    font-weight: bold;
+    border: 0;
+  }
+
+  #dublin_bus_search::-webkit-input-placeholder {
+    font-weight: normal;
+  }
+
+  .dublin_bus_content {
+    padding: 0 !important;
+    height: 40px;
+  }
+
+</style>
